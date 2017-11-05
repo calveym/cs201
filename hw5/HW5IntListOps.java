@@ -1,12 +1,14 @@
 // CS 201 HW 5 Problem 1
-// Name:
+// Name:Michael Calvey
 
 public class HW5IntListOps extends IntListOps {
 
     // Tackle one at a time!!!   Test using
     // "java HW5IntListOpsTest"
 
+    // Returns true or false if L is sorted
     public static boolean isSorted(IntList L) {
+        if(isEmpty(L)) { return true; }
         if(isEmpty(tail(L))){ return true; }
         else if(length(L) <= 1){
             return true;
@@ -19,6 +21,7 @@ public class HW5IntListOps extends IntListOps {
         }
     }
 
+    // Removes all instances of i from L
     public static IntList remove(int i, IntList L) {
         if(isEmpty(L)) { return empty(); }
         else{
@@ -30,9 +33,11 @@ public class HW5IntListOps extends IntListOps {
         }
     }
 
+    // Removes any duplicate items
     public static IntList removeDuplicates(IntList L) {
-
-        return empty(); // just a placeholder
-
+        if(isEmpty(L)) { return L; }
+        else {
+            return prepend(head(L), removeDuplicates(remove(head(L), tail(L))));
+        }
     }
 }

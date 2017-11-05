@@ -1,5 +1,5 @@
 // CS 201 HW 5 Problem 2
-// Name: 
+// Name:
 
 public class HW5IntListListOps extends IntListListOps {
 
@@ -7,11 +7,14 @@ public class HW5IntListListOps extends IntListListOps {
     // "java HW5IntListOpsTest"
 
     public static IntListList filterSorted (IntListList L) {
-        // Returns a list of all of the lists of L that are sorted. 
+        // Returns a list of all of the lists of L that are sorted.
         // To use a method from HW5IntListOps.java, use the prefix
         // "HW5IntListOps."
-
-        return empty();  // just a placeholder
+        if(isEmpty(L)) { return empty(); } else {
+            if(HW5IntListOps.isSorted(head(L))) {
+                return prepend(head(L), filterSorted(tail(L)));
+            } else return filterSorted(tail(L));
+        }
     }
 
     public static IntListList mapPrepend (int i, IntListList L) {
@@ -21,8 +24,9 @@ public class HW5IntListListOps extends IntListListOps {
         // methods. In the body, IntList methods must contain an explicit
         // "IntList." prefix, but no prefix is necessary for IntListList
         // methods.
-
-        return empty();  // just a placeholder
+        if(isEmpty(L)) { return empty(); } else {
+            return prepend(IntListOps.prepend(i, head(L)), mapPrepend(i, tail(L)));
+        }
     }
 
     public static IntListList subsequences (IntList L) {
@@ -31,9 +35,13 @@ public class HW5IntListListOps extends IntListListOps {
         // method uses both IntList and IntListList methods. In the body,
         // IntList methods must contain an explicit "IntList." prefix, but
         // no prefix is necessary for IntListList methods.
-
-        return empty();  // just a placeholder
-    } 
+        if(IntListOps.length(L) < 2) { return prepend(L, empty()); } else {
+            IntListList subs = subsequences(IntList.tail(L));
+            IntListList added = mapPrepend(IntList.head(L), subs);
+            added = prepend(IntList.prepend(IntList.head(L), IntList.empty()), added);
+            return append(added, subs);
+        }
+    }
 
 
     // optional (extra credit):
@@ -41,8 +49,8 @@ public class HW5IntListListOps extends IntListListOps {
 
     public static IntListList longest (IntListList L) {
 
-        // Returns a list of all of the lists of L that have the longest length. 
-        // If L is empty, returns the empty list. 
+        // Returns a list of all of the lists of L that have the longest length.
+        // If L is empty, returns the empty list.
         // Think carefully about base cases here!
 
         return empty();  // just a placeholder

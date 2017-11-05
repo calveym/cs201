@@ -17,6 +17,7 @@ public class CircularVector implements Circular
     public CircularVector()
     {
         list = new Vector();
+        current = -1;
     }
 
 
@@ -73,6 +74,7 @@ public class CircularVector implements Circular
     // clears whole vector
     {
         list.removeAllElements();
+        current = -1;
     }
 
     public static void log(String s)

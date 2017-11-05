@@ -5,24 +5,28 @@
 public class Josephus
 {
   // instance variables
+  
   Circular circle;
   int skipNum;
 
-  
+
   // constructor
 
   public Josephus(int numPeople, int numToSkip)
   // initialises circle with numPeople, saves skipNum
   {
+    log("Solving Josephus problem with " + numPeople + " people, skipping " +
+        numToSkip);
     circle = new CircularVector();
     for(int i = 0; i < numPeople; i++)
     {
-      circle.addAfterCurrent(i);
+      circle.addAfterCurrent(i + 1);
     }
-    skipNum = numToSkip; 
+    circle.next();
+    skipNum = numToSkip;
   }
 
-  
+
   // instance methods
 
   public void findMessenger()
@@ -60,6 +64,7 @@ public class Josephus
   }
 
   public static void main(String[] args)
+  // Runs Josephus problem with a people skipping b people each time
   {
     if(args.length == 0)
     {
