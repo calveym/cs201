@@ -4,7 +4,7 @@
 //
 // CS 201 HW 7
 //
-// Name:
+// Name: Michael Calvey
 
 import java.util.*;     // uses Java's Vectors so that browser can find them
 
@@ -60,8 +60,8 @@ public class IntVectorHeap implements IntHeap {
         return minVal;
     }
 
+    // Moves value at index leaf as high up heap as possible
     public void percolateUp(int leaf) {
-        l("Trying to percolate up");
         int parent = parent(leaf);
         int value = data.get(leaf);
         while (leaf > 0 && value < data.get(parent)) {
@@ -73,6 +73,7 @@ public class IntVectorHeap implements IntHeap {
 
     }
 
+    // pushes value at root down until organised
     public void pushDownRoot(int root) {
         int heapSize = data.size();
         int value = data.get(root);
@@ -102,6 +103,7 @@ public class IntVectorHeap implements IntHeap {
         }
     }
 
+    // logger function
     public static void l(String s) {
         System.out.println(s);
     }

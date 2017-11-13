@@ -2,7 +2,7 @@
 //
 // CS 201 HW 7
 //
-// Name:
+// Name: Michael Calvey
 
 import java.applet.*;
 import java.awt.*;
@@ -48,8 +48,8 @@ public class HeapTest extends Applet implements ActionListener {
         // *** replace the following line with the line below once
         // *** your tree drawing method works and you are starting to work
         // *** on IntSkewHeap.java
-        hc2 = new HeapCanvas(new RandomHeap(), "Random 'Heap'");
-        // hc2 = new HeapCanvas(new IntSkewHeap(), "Skew Heap");
+        //hc2 = new HeapCanvas(new RandomHeap(), "Random 'Heap'");
+        hc2 = new HeapCanvas(new IntSkewHeap(), "Skew Heap");
 
         Panel heapPanel = new Panel();
         heapPanel.setBackground(Color.white);
