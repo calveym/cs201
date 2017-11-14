@@ -13,7 +13,6 @@ public class Calc extends Applet implements ActionListener {
     private static final long serialVersionUID = 1L; // to avoid Eclipse warning
 
     // instance variables
-
     protected Label result;         // label used to show result
     protected Stack<Integer> stack; // stack used for calculations
     protected int current;          // current number being entered
@@ -33,26 +32,17 @@ public class Calc extends Applet implements ActionListener {
     static final Color dblue = Color.blue.darker();
 
     public void init() {
+        // set up vars
+        stack = new Stack<Integer>();
+
         setFont(new Font("TimesRoman", Font.BOLD, 28));
 
-        // add your code here to set up the applet.
-
-        // hint: to get the blue border around the result label,
-        // I used a BorderLayout and added empty labels to the borders
-
-        // make good use of helper methods to keep your code readable -
-        // a rule of thumb is: if it doesn't fit on the screen, the
-        // method is too long (and you might loose points :( )
-
-
-        // just a placeholder to get it to compile and to demonstrate
-        // the event handling:
-        // Create panels to organise GUI
+        // creates panels
         Panel res = new Panel();  // result container
         Panel buttons = new Panel();  // main container for numbers and operators
         Panel ec = new Panel();  // main container for enter and clear
 
-
+        // setting layouts
         res.setLayout(new BorderLayout());
         buttons.setLayout(new GridLayout(4, 4));
         setLayout(new BorderLayout());
@@ -63,6 +53,7 @@ public class Calc extends Applet implements ActionListener {
         add("Center", buttons);
         add("South", ec);
 
+        // setting up result gui
         result = new Label("result", Label.RIGHT);
         Label empty1 = new Label("  ", Label.LEFT);
         Label empty2 = new Label("  ", Label.LEFT);
@@ -95,24 +86,47 @@ public class Calc extends Applet implements ActionListener {
         ec.add(CButton("Enter", dblue, lblue));
         ec.add(CButton("Clear", dblue, lblue));
 
+        // adds result items
         res.add("Center", result);
         res.add("South", empty1);
         res.add("North", empty2);
         res.add("East", empty3);
         res.add("West", empty4);
 
+        show(current);
+    }
 
-        //
-        // result = new Label("result");
-        // add(result);
-        // add(CButton("+", dblue, orange));
-        // add(CButton("3", dgreen, yellow));
-        // add(CButton("9", dgreen, yellow));
-
+    // handle button clicks
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() instanceof Button) {
+            String label = ((Button)e.getSource()).getLabel();
+            if (label.equals("+")) {
+                checkEnter();
+                add();
+            } else if (label.equals("-")) {
+                checkEnter();
+                sub();
+            } else if (label.equals("*")) {
+                checkEnter();
+                mult();
+            } else if (label.equals("/")) {
+                checkEnter();
+                div();
+            } else if (label.equals("(-)"))
+                swap();
+            else if (label.equals("Enter"))
+                enter();
+            else if (label.equals("Clear"))
+                clear();
+            else if (label.equals("Pop"))
+                pop();
+            else     // number button
+                number(Integer.parseInt(label));
+        }
     }
 
 
-    // a useful helper methods, given to you for free!
+    // helpers
 
     // create a colored button
     protected Button CButton(String s, Color fg, Color bg) {
@@ -123,47 +137,116 @@ public class Calc extends Applet implements ActionListener {
         return b;
     }
 
-    // handle button clicks
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Button) {
-            String label = ((Button)e.getSource()).getLabel();
-            if (label.equals("+"))
-                add();
-            else if (label.equals("-"))
-                sub();
-            else if (label.equals("*"))
-                mult();
-
-
-            // add similar calls for all other "non-number" buttons
-
-
-            else {     // number button
-                int n = Integer.parseInt(label);
-                number(n);
-            }
-        }
-    }
-
     // display number n in result label
     protected void show(int n) {
+        if(entered) {
+            result.setForeground(red);
+        }
+        else {
+            result.setForeground(dgreen);
+        }
         result.setText(Integer.toString(n));
     }
 
+    // enter if not entered
+    protected void checkEnter() {
+        if(!entered)
+            enter();
+    }
 
-    // just placeholders to get it to compile
+    // ensures pop is never called on empty stack
+    protected int safePop() {
+        if(stack.size() >= 1)
+            return stack.pop();
+        else
+            return 0;
+    }
+
+
+    // button methods
 
     // handle add button
     protected void add() {
-        System.out.println("add was pressed");
+        int a = safePop();
+        int b = safePop();
+        current = a + b;
+        enter();
     }
+
+    // handle subtract button
     protected void sub() {
+        int a = safePop();
+        int b = safePop();
+        current = b - a;
+        enter();
     }
+
+    // handle multiply button
     protected void mult() {
+        int a = safePop();
+        int b = safePop();
+        current = a * b;
+        enter();
+    }
+
+    // handle divide button
+    protected void div() {
+        int a = safePop();
+        int b = safePop();
+        current = b / a;
+        enter();
+    }
+
+    // handle pop button
+    protected void pop() {
+        if(stack.size() >= 1)
+            current = safePop();
+        else
+            current = 0;
+        show(current);
+    }
+
+    // handle swap button
+    protected void swap() {
+        current *= -1;
+        show(current);
+    }
+
+    // handle enter button
+    protected void enter() {
+        if(entered) {
+            current = 0;
+            return;
+        }
+        stack.push(current);
+        entered = true;
+        show(current);
+        current = 0; // reset number
+        entered = false; // reset entered
+    }
+
+    // handle clear button
+    protected void clear() {
+        current = 0;
+        stack = new Stack<Integer>();
+        show(current);
+        entered = false;
     }
 
     // handle number buttons
     protected void number(int n) {
-        show(n);
+        if (current == 0) {
+            current = n;
+        }
+        else if(String.valueOf(current).length() < 9) {
+            current *= 10;
+            current += n;
+        }
+        show(current);
+    }
+
+    // logger function
+    protected void l(String s) {
+        System.out.println(s);
     }
 }
