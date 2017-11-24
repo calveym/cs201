@@ -117,27 +117,22 @@ public class IntBSTops {
         // returns width of left "half" of t:
         // 0 if t is null
         // otherwise, the width of t's left subtree (but at least 1)
-
         if(t == null)
             return 0;
         if(t.isLeaf())
             return 1;
-        else
-            return 1 + leftWidth(t.left());
+        else return 1 + leftWidth(t.left());
     }
 
     public static int rightWidth(IntBST t) {
         // returns width of right "half" of t:
         // 0 if t is null
         // otherwise, the width of t's right subtree (but at least 1)
-
         if(t == null)
             return 0;
         if(t.isLeaf())
             return 1;
         else return 1 + rightWidth(t.right());
-
-        return 0; // just a placeholder
     }
 
     // problem 4 --------------------------------------------------
