@@ -100,16 +100,16 @@ public class Calc extends Applet implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Button) {
             String label = ((Button)e.getSource()).getLabel();
-            if (label.equals("+")) {
+            if (label.equals("+")) {  // add hit
                 checkEnter();
                 add();
-            } else if (label.equals("-")) {
+            } else if (label.equals("-")) {  // subtract hit
                 checkEnter();
                 sub();
-            } else if (label.equals("*")) {
+            } else if (label.equals("*")) {  // multiply hit
                 checkEnter();
                 mult();
-            } else if (label.equals("/")) {
+            } else if (label.equals("/")) {  // divide hit
                 checkEnter();
                 div();
             } else if (label.equals("(-)"))
@@ -126,7 +126,7 @@ public class Calc extends Applet implements ActionListener {
     }
 
 
-    // helpers
+    // helper methods
 
     // create a colored button
     protected Button CButton(String s, Color fg, Color bg) {
