@@ -29,6 +29,8 @@ public class IntBSTops {
     public static int height(IntBST t) {
         if(t == null) // base recursion case
             return 0;
+        if(t.isLeaf())
+            return 1;
         if(t.left() != null && t.right() != null) {
             // left and right nodes exist
             if(height(t.left()) >= height(t.right()))
@@ -47,6 +49,8 @@ public class IntBSTops {
 
     // returns balance factor of tree t
     public static int balanceFact(IntBST t) {
+        System.out.println("Height: " + height(t.right()));
+        System.out.println("Height l: " + height(t.left()));
         return height(t.right()) - height(t.left());
     }
 
@@ -59,7 +63,7 @@ public class IntBSTops {
         else if (balanceFact(t) > 1 || balanceFact(t) < -1) // break if imbalanced
             return false;
         else if(t.left() != null && t.right() != null) // check recursively
-            return (isBalanced(t.left()) &&  isBalanced(t.right()));
+            return (isBalanced(t.left()) && isBalanced(t.right()));
         else return false;
     }
 
