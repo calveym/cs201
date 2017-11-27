@@ -49,8 +49,6 @@ public class IntBSTops {
 
     // returns balance factor of tree t
     public static int balanceFact(IntBST t) {
-        System.out.println("Height: " + height(t.right()));
-        System.out.println("Height l: " + height(t.left()));
         return height(t.right()) - height(t.left());
     }
 
